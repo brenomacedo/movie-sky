@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_sky/app/movie/components/MovieItem.dart';
 
 class IndexMovies extends StatefulWidget {
   const IndexMovies({ Key? key }) : super(key: key);
@@ -13,7 +14,7 @@ class _IndexMoviesState extends State<IndexMovies> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         color: Colors.black,
         child: ListView(
           children: [
@@ -79,7 +80,103 @@ class _IndexMoviesState extends State<IndexMovies> {
                   ),
                 )
               ],
-            )
+            ),
+            Text('Suggested for you', style: GoogleFonts.ubuntu(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 20
+            )),
+            SizedBox(height: 15),
+            SizedBox(
+              width: MediaQuery.of(context).size.width - 48,
+              height: 32,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text('Thriller', style: GoogleFonts.ubuntu(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15
+                    )),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red)
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text('Thriller', style: GoogleFonts.ubuntu(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15
+                    )),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red)
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text('Thriller', style: GoogleFonts.ubuntu(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15
+                    )),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red)
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text('Thriller', style: GoogleFonts.ubuntu(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15
+                    )),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red)
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text('Thriller', style: GoogleFonts.ubuntu(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15
+                    )),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red)
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text('Thriller', style: GoogleFonts.ubuntu(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15
+                    )),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red)
+                    ),
+                  )
+                ],
+              ),
+            ),
+            SizedBox(height: 15),
+            MovieItem(),
+            SizedBox(height: 15),
+            MovieItem(),
+            SizedBox(height: 15),
+            MovieItem(),
+            SizedBox(height: 15),
+            MovieItem(),
+            SizedBox(height: 15),
+            MovieItem(),
           ],
         ),
       )
