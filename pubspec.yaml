@@ -22,6 +22,7 @@ environment:
 
 dependencies:
   flutter_modular: ^3.4.1+1
+  google_fonts: ^2.1.0
   flutter:
     sdk: flutter
 
