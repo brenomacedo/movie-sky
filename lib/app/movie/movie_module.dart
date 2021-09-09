@@ -1,14 +1,14 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:movie_sky/app/movie/movie_module.dart';
+import 'package:movie_sky/app/movie/screens/IndexMovies.dart';
 
-class AppModule extends Module {
+class MovieModule extends Module {
 
   @override
   final List<Bind> binds = [];
 
   @override
   final List<ModularRoute> routes = [
-    ModuleRoute('/movie', module: MovieModule())
+    ChildRoute('/', child: (_, args) => IndexMovies())
   ];
 
 }

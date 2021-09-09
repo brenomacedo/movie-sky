@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class AppWidget extends StatelessWidget {
@@ -6,8 +7,16 @@ class AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.black,
+      statusBarBrightness: Brightness.dark
+    ));
+
     return MaterialApp(
-      initialRoute: '/',
+      initialRoute: '/movie',
+      title: 'Movie Sky',
+      debugShowCheckedModeBanner: false
     ).modular();
   }
 }
