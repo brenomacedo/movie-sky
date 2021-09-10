@@ -14,7 +14,7 @@ class AppWidget extends StatelessWidget {
     ));
 
     return MaterialApp(
-      initialRoute: '/movie',
+      initialRoute: '/movie/1',
       title: 'Movie Sky',
       debugShowCheckedModeBanner: false
     ).modular();

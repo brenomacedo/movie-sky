@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:movie_sky/app/movie/components/MovieItem.dart';
+import 'package:movie_sky/app/movie/components/movie_item.dart';
 import 'package:movie_sky/app/movie/stores/index_movies_stores.dart';
 
 class IndexMovies extends StatefulWidget {
@@ -19,9 +19,8 @@ class _IndexMoviesState extends State<IndexMovies> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        color: Colors.black,
         child: ListView(
           children: [
             Row(
@@ -248,7 +247,8 @@ class _IndexMoviesState extends State<IndexMovies> {
             MovieItem(),
           ],
         ),
-      )
+      ),
+      backgroundColor: Colors.black,
     );
   }
 }
