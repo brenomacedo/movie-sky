@@ -23,6 +23,8 @@ environment:
 dependencies:
   flutter_modular: ^3.4.1+1
   google_fonts: ^2.1.0
+  mobx: ^2.0.0
+  flutter_mobx: ^2.0.0
   flutter:
     sdk: flutter
 
@@ -34,6 +36,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  mobx_codegen: ^2.0.0
+  build_runner:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

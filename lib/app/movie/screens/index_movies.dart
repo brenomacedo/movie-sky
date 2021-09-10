@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_sky/app/movie/components/MovieItem.dart';
+import 'package:movie_sky/app/movie/stores/index_movies_stores.dart';
 
 class IndexMovies extends StatefulWidget {
   const IndexMovies({ Key? key }) : super(key: key);
@@ -10,6 +13,9 @@ class IndexMovies extends StatefulWidget {
 }
 
 class _IndexMoviesState extends State<IndexMovies> {
+
+  final indexMoviesStore = Modular.get<IndexMoviesStore>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,10 +35,62 @@ class _IndexMoviesState extends State<IndexMovies> {
                 )),
                 Padding(
                   padding: EdgeInsets.only(top: 8),
-                  child: IconButton(icon: Icon(Icons.search, color: Colors.white, size: 25), onPressed: () {}),
+                  child: Observer(builder: (_) {
+                    return IconButton(icon: Icon(indexMoviesStore.showSearchbar
+                      ? Icons.close
+                      : Icons.search,
+                      color: Colors.white, size: 25),
+                      onPressed: indexMoviesStore.toggleSearchBar);
+                  }),
                 ),
               ],
             ),
+            Observer(builder: (_) {
+              if(indexMoviesStore.showSearchbar)
+                return Row(
+                  children: [
+                    Expanded(child: TextField(
+                      style: GoogleFonts.ubuntu(
+                        color: Colors.white,
+                        fontSize: 20
+                      ),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Search a film',
+                        hintStyle: GoogleFonts.ubuntu(
+                          color: Colors.grey[700],
+                          fontSize: 20,
+                          decorationColor: Colors.red
+                        )
+                      ),
+                    )),
+                    SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(150),
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: Icon(Icons.search),
+                          style: ButtonStyle(
+                            minimumSize: MaterialStateProperty.all(Size.zero),
+                            padding: MaterialStateProperty.all(EdgeInsets.zero),
+                            backgroundColor: MaterialStateProperty.all(Colors.red)
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                );
+
+              return SizedBox();
+            }),
+            Observer(builder: (_) {
+              if(indexMoviesStore.showSearchbar)
+                return SizedBox(height: 15);
+
+              return SizedBox();
+            }),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
