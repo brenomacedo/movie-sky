@@ -139,6 +139,17 @@ class _IndexMoviesState extends State<IndexMovies> {
                 )
               ],
             ),
+            SizedBox(height: 15),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text('Search for actors', style: GoogleFonts.ubuntu(
+                fontWeight: FontWeight.bold
+              )),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.red)
+              ),
+            ),
+            SizedBox(height: 15),
             Text('Suggested for you', style: GoogleFonts.ubuntu(
               color: Colors.white,
               fontWeight: FontWeight.bold,
