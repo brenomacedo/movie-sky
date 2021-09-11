@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_sky/app/components/title_and_sub.dart';
 import 'package:movie_sky/app/movie/components/actor_item.dart';
 
 class ViewMovie extends StatelessWidget {
@@ -128,16 +129,10 @@ class ViewMovie extends StatelessWidget {
               ]
             ),
             SizedBox(height: 28),
-            Text('Sinopse', style: GoogleFonts.ubuntu(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ), textAlign: TextAlign.center),
-            SizedBox(height: 16),
-            Text('Evan McCauley has skills he never learned and memories of places he has never visited. Self-medicated and on the brink of a mental breakdown, a secret group that call themselves “Infinites” come to his rescue, revealing that his memories are real', style: GoogleFonts.ubuntu(
-              color: Colors.grey[700],
-              fontSize: 16,
-            ), textAlign: TextAlign.center),
+            TitleAndSub(
+              title: 'Sinopse',
+              subtitle: 'Evan McCauley has skills he never learned and memories of places he has never visited. Self-medicated and on the brink of a mental breakdown, a secret group that call themselves “Infinites” come to his rescue, revealing that his memories are real',
+            ),
             SizedBox(height: 28),
             Text('Cast and crew', style: GoogleFonts.ubuntu(
               color: Colors.white,
