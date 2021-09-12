@@ -1,3 +1,4 @@
+import 'package:movie_sky/app/movie/models/Genre.dart';
 import 'package:movie_sky/config/config.dart';
 
 class Movie {
@@ -7,6 +8,7 @@ class Movie {
   String? posterImage;
   int? rating;
   String? sinopse;
+  List<Genre>? genres;
 
   Movie();
 
@@ -18,6 +20,9 @@ class Movie {
     newMovie.posterImage = '$IMAGE_BASE_URL${movie['backdrop_path']}';
     newMovie.rating = (movie['vote_average'] / 2).ceil();
     newMovie.sinopse = movie['overview'];
+    newMovie.genres = movie['genre_ids'].map((id) {
+      return Genre.fromId(id);
+    }).toList();
 
     return newMovie;
   }
