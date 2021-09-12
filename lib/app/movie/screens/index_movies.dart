@@ -132,15 +132,16 @@ class _IndexMoviesState extends State<IndexMovies> {
                           SizedBox(height: 5),
                           Row(
                             children: [
-                              Icon(Icons.star, color: Colors.amber, size: 25),
-                              Icon(Icons.star, color: Colors.amber, size: 25),
-                              Icon(Icons.star, color: Colors.amber, size: 25),
-                              Icon(Icons.star, color: Colors.amber, size: 25),
-                              Icon(Icons.star, color: Colors.grey[700], size: 25),
+                              ...Iterable.generate(indexMoviesStore.popularPick?.rating ?? 0).map((e) {
+                                return Icon(Icons.star, color: Colors.amber, size: 25);
+                              }).toList(),
+                              ...Iterable.generate(indexMoviesStore.popularPick?.rating != null ? 5 - indexMoviesStore.popularPick!.rating! : 0).map((e) {
+                                return Icon(Icons.star, color: Colors.grey[700], size: 25);
+                              }).toList()
                             ],
                           ),
                           SizedBox(height: 5),
-                          Text('Original language: EN', style: GoogleFonts.ubuntu(
+                          Text('Original language: ${indexMoviesStore.popularPick?.originalLanguage?.toUpperCase()}', style: GoogleFonts.ubuntu(
                             color: Colors.white
                           ))
                         ],
@@ -248,15 +249,20 @@ class _IndexMoviesState extends State<IndexMovies> {
               ),
             ),
             SizedBox(height: 15),
-            MovieItem(),
-            SizedBox(height: 15),
-            MovieItem(),
-            SizedBox(height: 15),
-            MovieItem(),
-            SizedBox(height: 15),
-            MovieItem(),
-            SizedBox(height: 15),
-            MovieItem(),
+            Observer(
+              builder: (_) {
+                if(indexMoviesStore.status == Status.LOADING)
+                  return Center(
+                    child: CircularProgressIndicator(color: Colors.red)
+                  );
+
+                return Column(
+                  children: indexMoviesStore.popularMovies.map((movie) {
+                    return MovieItem(movie: movie);
+                  }).toList(),
+                );
+              }
+            )
           ],
         ),
       ),

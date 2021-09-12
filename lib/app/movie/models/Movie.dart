@@ -6,6 +6,8 @@ class Movie {
   String? title;
   String? releaseDate;
   String? posterImage;
+  String? originalLanguage;
+  String? originalTitle;
   int? rating;
   String? sinopse;
   List<Genre>? genres;
@@ -20,7 +22,9 @@ class Movie {
     newMovie.posterImage = '$IMAGE_BASE_URL${movie['backdrop_path']}';
     newMovie.rating = (movie['vote_average'] / 2).ceil();
     newMovie.sinopse = movie['overview'];
-    newMovie.genres = movie['genre_ids'].map((id) {
+    newMovie.originalLanguage = movie['original_language'];
+    newMovie.originalTitle = movie['original_title'];
+    newMovie.genres = movie['genre_ids'].map<Genre>((id) {
       return Genre.fromId(id);
     }).toList();
 
