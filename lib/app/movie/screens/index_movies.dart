@@ -90,53 +90,65 @@ class _IndexMoviesState extends State<IndexMovies> {
 
               return SizedBox();
             }),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage('https://image.tmdb.org/t/p/original/wjQXZTlFM3PVEUmKf1sUajjygqT.jpg'),
-                      alignment: Alignment.center,
-                      fit: BoxFit.cover
+            Observer(
+              builder: (_) {
+
+                if(indexMoviesStore.status == Status.LOADING)
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.red,
                     ),
-                    borderRadius: BorderRadius.circular(12)
-                  ),
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  height: MediaQuery.of(context).size.width * 0.6
-                ),
-                SizedBox(width: 20),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Joker (2019)', style: GoogleFonts.ubuntu(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold
-                      )),
-                      SizedBox(height: 5),
-                      Text('Crime, Drama, Thriller', style: GoogleFonts.ubuntu(
-                        color: Colors.grey[700]
-                      )),
-                      SizedBox(height: 5),
-                      Row(
+                  );
+
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage('${indexMoviesStore.popularPick?.posterImage}'),
+                          alignment: Alignment.center,
+                          fit: BoxFit.cover
+                        ),
+                        borderRadius: BorderRadius.circular(12)
+                      ),
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      height: MediaQuery.of(context).size.width * 0.6
+                    ),
+                    SizedBox(width: 20),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Icon(Icons.star, color: Colors.amber, size: 25),
-                          Icon(Icons.star, color: Colors.amber, size: 25),
-                          Icon(Icons.star, color: Colors.amber, size: 25),
-                          Icon(Icons.star, color: Colors.amber, size: 25),
-                          Icon(Icons.star, color: Colors.grey[700], size: 25),
+                          Text('${indexMoviesStore.popularPick?.title} (${indexMoviesStore.popularPick?.releaseDate})', style: GoogleFonts.ubuntu(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold
+                          )),
+                          SizedBox(height: 5),
+                          Text('Crime, Drama, Thriller', style: GoogleFonts.ubuntu(
+                            color: Colors.grey[700]
+                          )),
+                          SizedBox(height: 5),
+                          Row(
+                            children: [
+                              Icon(Icons.star, color: Colors.amber, size: 25),
+                              Icon(Icons.star, color: Colors.amber, size: 25),
+                              Icon(Icons.star, color: Colors.amber, size: 25),
+                              Icon(Icons.star, color: Colors.amber, size: 25),
+                              Icon(Icons.star, color: Colors.grey[700], size: 25),
+                            ],
+                          ),
+                          SizedBox(height: 5),
+                          Text('Original language: EN', style: GoogleFonts.ubuntu(
+                            color: Colors.white
+                          ))
                         ],
                       ),
-                      SizedBox(height: 5),
-                      Text('Original language: EN', style: GoogleFonts.ubuntu(
-                        color: Colors.white
-                      ))
-                    ],
-                  ),
-                )
-              ],
+                    )
+                  ],
+                );
+              },
             ),
             SizedBox(height: 15),
             ElevatedButton(
