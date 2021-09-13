@@ -63,6 +63,7 @@ class _IndexMoviesState extends State<IndexMovies> {
                           decorationColor: Colors.red
                         )
                       ),
+                      onChanged: (text) => indexMoviesStore.setSearchField(text),
                     )),
                     SizedBox(
                       width: 40,
@@ -70,9 +71,7 @@ class _IndexMoviesState extends State<IndexMovies> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(150),
                         child: ElevatedButton(
-                          onPressed: () {
-                            indexMoviesStore.searchMovieByName('hello');
-                          },
+                          onPressed: indexMoviesStore.searchMovieByName,
                           child: Icon(Icons.search),
                           style: ButtonStyle(
                             minimumSize: MaterialStateProperty.all(Size.zero),
@@ -201,17 +200,26 @@ class _IndexMoviesState extends State<IndexMovies> {
             SizedBox(height: 15),
             Observer(
               builder: (_) {
-                if(indexMoviesStore.status == Status.LOADING)
-                  return Center(
-                    child: CircularProgressIndicator(color: Colors.red)
-                  );
-
-                return Column(
+                return ListView(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
                   children: indexMoviesStore.popularMovies.map((movie) {
                     return MovieItem(movie: movie);
                   }).toList(),
                 );
               }
+            ),
+            Observer(
+              builder: (_) {
+
+                indexMoviesStore.loadMoreMovies();
+
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.red
+                  )
+                );
+              },
             )
           ],
         ),

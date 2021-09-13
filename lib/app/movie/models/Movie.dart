@@ -5,7 +5,7 @@ class Movie {
 
   String? title;
   String? releaseDate;
-  String? posterImage;
+  String posterImage = 'https://i.imgur.com/E0UnFcD.png';
   String? originalLanguage;
   String? originalTitle;
   int? rating;
@@ -19,7 +19,8 @@ class Movie {
 
     newMovie.title = movie['title'];
     newMovie.releaseDate = movie['release_date'].split('-')[0];
-    newMovie.posterImage = '$IMAGE_BASE_URL${movie['poster_path']}';
+    if(movie['poster_path'] != null)
+      newMovie.posterImage = '$IMAGE_BASE_URL${movie['poster_path']}';
     newMovie.rating = (movie['vote_average'] / 2).ceil();
     newMovie.sinopse = movie['overview'];
     newMovie.originalLanguage = movie['original_language'];

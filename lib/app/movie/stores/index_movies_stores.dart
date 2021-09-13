@@ -15,29 +15,6 @@ class IndexMoviesStore = _IndexMoviesStore with _$IndexMoviesStore;
 
 abstract class _IndexMoviesStore with Store {
 
-  _IndexMoviesStore() {
-    autorun((_) async {
-
-      http.Response response = await http.get(Uri.parse('$BASE_URL/discover/movie?sort_by=popularity.desc&api_key=$API_KEY'));
-      Map<dynamic, dynamic> movies = jsonDecode(response.body);
-
-      List<Movie> popularMovies = movies['results'].map<Movie>((movie) {
-        return Movie.fromMap(movie);
-      }).toList();
-
-      setPopularPick(popularMovies[0]);
-
-      popularMovies.removeAt(0);
-
-      resetLoadedPages();
-
-      setPopularMovies(popularMovies);
-
-      setStatus(Status.IDLE);
-
-    });
-  }
-
   @observable
   Status status = Status.LOADING;
 
@@ -64,7 +41,7 @@ abstract class _IndexMoviesStore with Store {
   }
 
   @observable
-  int loadedPages = 1;
+  int loadedPages = 0;
 
   @action
   void resetLoadedPages() {
@@ -87,10 +64,10 @@ abstract class _IndexMoviesStore with Store {
     return '$lastQueryUrl&page=$loadedPages';
   }
 
-  Future<void> searchMovieByName(String name) async {
+  Future<void> searchMovieByName() async {
     setStatus(Status.LOADING);
     
-    http.Response response = await http.get(Uri.parse('$BASE_URL/search/movie?sort_by=popularity.desc&api_key=$API_KEY&query=$name'));
+    http.Response response = await http.get(Uri.parse('$BASE_URL/search/movie?sort_by=popularity.desc&api_key=$API_KEY&query=$searchField'));
     Map<dynamic, dynamic> movies = jsonDecode(response.body);
 
     setLimitPages(movies['total_pages']);
@@ -99,8 +76,6 @@ abstract class _IndexMoviesStore with Store {
     List<Movie> popularMovies = movies['results'].map<Movie>((movie) {
       return Movie.fromMap(movie);
     }).toList();
-
-    print(popularMovies);
 
     setPopularPick(popularMovies[0]);
 
@@ -116,16 +91,23 @@ abstract class _IndexMoviesStore with Store {
 
     loadedPages++;
 
-    if(loadedPages > 500) return;
+    if(loadedPages > limitPages) return;
 
     http.Response response = await http.get(Uri.parse(lastQueryUrlPage));
     Map<dynamic, dynamic> movies = jsonDecode(response.body);
+
+    this.limitPages = movies['total_pages'];
 
     List<Movie> popularMovies = movies['results'].map<Movie>((movie) {
       return Movie.fromMap(movie);
     }).toList();
 
-    popularMovies.addAll(popularMovies);
+    if(movies['page'] == 1) {
+      setPopularPick(popularMovies[0]);
+      popularMovies.removeAt(0);
+    }
+
+    this.popularMovies.addAll(popularMovies);
 
     this.status = Status.IDLE;
 
@@ -141,6 +123,12 @@ abstract class _IndexMoviesStore with Store {
 
   // ================= TEXT FIELDS CONTROLLERS ====================
 
+  @observable
+  String searchField = '';
 
+  @action
+  void setSearchField(String searchField) {
+    this.searchField = searchField;
+  }
 
 }

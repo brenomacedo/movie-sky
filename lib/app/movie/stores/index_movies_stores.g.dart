@@ -107,6 +107,21 @@ mixin _$IndexMoviesStore on _IndexMoviesStore, Store {
     });
   }
 
+  final _$searchFieldAtom = Atom(name: '_IndexMoviesStore.searchField');
+
+  @override
+  String get searchField {
+    _$searchFieldAtom.reportRead();
+    return super.searchField;
+  }
+
+  @override
+  set searchField(String value) {
+    _$searchFieldAtom.reportWrite(value, super.searchField, () {
+      super.searchField = value;
+    });
+  }
+
   final _$loadMoreMoviesAsyncAction =
       AsyncAction('_IndexMoviesStore.loadMoreMovies');
 
@@ -185,6 +200,17 @@ mixin _$IndexMoviesStore on _IndexMoviesStore, Store {
   }
 
   @override
+  void setSearchField(String searchField) {
+    final _$actionInfo = _$_IndexMoviesStoreActionController.startAction(
+        name: '_IndexMoviesStore.setSearchField');
+    try {
+      return super.setSearchField(searchField);
+    } finally {
+      _$_IndexMoviesStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 status: ${status},
@@ -193,6 +219,7 @@ loadedPages: ${loadedPages},
 limitPages: ${limitPages},
 lastQueryUrl: ${lastQueryUrl},
 showSearchbar: ${showSearchbar},
+searchField: ${searchField},
 lastQueryUrlPage: ${lastQueryUrlPage}
     ''';
   }
