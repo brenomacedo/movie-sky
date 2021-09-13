@@ -16,6 +16,13 @@ mixin _$IndexMoviesStore on _IndexMoviesStore, Store {
           Computed<String>(() => super.lastQueryUrlPage,
               name: '_IndexMoviesStore.lastQueryUrlPage'))
       .value;
+  Computed<bool>? _$loadedAllComputed;
+
+  @override
+  bool get loadedAll =>
+      (_$loadedAllComputed ??= Computed<bool>(() => super.loadedAll,
+              name: '_IndexMoviesStore.loadedAll'))
+          .value;
 
   final _$statusAtom = Atom(name: '_IndexMoviesStore.status');
 
@@ -189,6 +196,17 @@ mixin _$IndexMoviesStore on _IndexMoviesStore, Store {
   }
 
   @override
+  void setLastQueryUrl(String lastQueryUrl) {
+    final _$actionInfo = _$_IndexMoviesStoreActionController.startAction(
+        name: '_IndexMoviesStore.setLastQueryUrl');
+    try {
+      return super.setLastQueryUrl(lastQueryUrl);
+    } finally {
+      _$_IndexMoviesStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void toggleSearchBar() {
     final _$actionInfo = _$_IndexMoviesStoreActionController.startAction(
         name: '_IndexMoviesStore.toggleSearchBar');
@@ -220,7 +238,8 @@ limitPages: ${limitPages},
 lastQueryUrl: ${lastQueryUrl},
 showSearchbar: ${showSearchbar},
 searchField: ${searchField},
-lastQueryUrlPage: ${lastQueryUrlPage}
+lastQueryUrlPage: ${lastQueryUrlPage},
+loadedAll: ${loadedAll}
     ''';
   }
 }

@@ -31,7 +31,6 @@ abstract class _IndexMoviesStore with Store {
     this.popularPick = popularPick;
   }
 
-
   final ObservableList<Movie> popularMovies = ObservableList<Movie>();
 
   @action
@@ -45,7 +44,7 @@ abstract class _IndexMoviesStore with Store {
 
   @action
   void resetLoadedPages() {
-    loadedPages = 1;
+    this.loadedPages = 1;
   }
 
   @observable
@@ -59,6 +58,11 @@ abstract class _IndexMoviesStore with Store {
   @observable
   String lastQueryUrl = '$BASE_URL/discover/movie?sort_by=popularity.desc&api_key=$API_KEY';
 
+  @action
+  void setLastQueryUrl(String lastQueryUrl) {
+    this.lastQueryUrl = lastQueryUrl;
+  }
+
   @computed
   String get lastQueryUrlPage {
     return '$lastQueryUrl&page=$loadedPages';
@@ -68,6 +72,35 @@ abstract class _IndexMoviesStore with Store {
     setStatus(Status.LOADING);
     
     http.Response response = await http.get(Uri.parse('$BASE_URL/search/movie?sort_by=popularity.desc&api_key=$API_KEY&query=$searchField'));
+    setLastQueryUrl('$BASE_URL/search/movie?sort_by=popularity.desc&api_key=$API_KEY&query=$searchField');
+
+    setSearchField('');
+    toggleSearchBar();
+
+    Map<dynamic, dynamic> movies = jsonDecode(response.body);
+
+    setLimitPages(movies['total_pages']);
+    resetLoadedPages();
+
+    List<Movie> popularMovies = movies['results'].map<Movie>((movie) {
+      return Movie.fromMap(movie);
+    }).toList();
+
+    setPopularPick(popularMovies[0]);
+
+    popularMovies.removeAt(0);
+
+    setPopularMovies(popularMovies);
+
+    setStatus(Status.IDLE);
+  }
+
+  Future<void> searchByGenre(int genreId) async {
+    setStatus(Status.LOADING);
+  
+    http.Response response = await http.get(Uri.parse('$BASE_URL/discover/movie?sort_by=popularity.desc&with_genres=$genreId&api_key=$API_KEY'));
+    setLastQueryUrl('$BASE_URL/discover/movie?sort_by=popularity.desc&with_genres=$genreId&api_key=$API_KEY');
+
     Map<dynamic, dynamic> movies = jsonDecode(response.body);
 
     setLimitPages(movies['total_pages']);
@@ -89,9 +122,9 @@ abstract class _IndexMoviesStore with Store {
   @action
   Future<void> loadMoreMovies() async {
 
-    loadedPages++;
+    this.loadedPages++;
 
-    if(loadedPages > limitPages) return;
+    if(this.loadedPages > this.limitPages) return;
 
     http.Response response = await http.get(Uri.parse(lastQueryUrlPage));
     Map<dynamic, dynamic> movies = jsonDecode(response.body);
@@ -112,6 +145,9 @@ abstract class _IndexMoviesStore with Store {
     this.status = Status.IDLE;
 
   }
+
+  @computed
+  bool get loadedAll => this.loadedPages == this.limitPages;
 
   @observable
   bool showSearchbar = false;

@@ -128,8 +128,19 @@ class _IndexMoviesState extends State<IndexMovies> {
                             fontWeight: FontWeight.bold
                           )),
                           SizedBox(height: 5),
-                          Text('Crime, Drama, Thriller', style: GoogleFonts.ubuntu(
-                            color: Colors.grey[700]
+                          Text.rich(TextSpan(
+                            style: TextStyle(
+                              color: Colors.grey[700]
+                            ),
+                            children: indexMoviesStore.popularPick?.genres?.asMap().entries.map((entry) {
+                    
+                              int idx = entry.key;
+                              Genre val = entry.value;
+                    
+                              return TextSpan(
+                                text: indexMoviesStore.popularPick?.genres?.length == idx + 1 ? '${val.name}' : '${val.name}, '
+                              );
+                            }).toList()
                           )),
                           SizedBox(height: 5),
                           Row(
@@ -183,7 +194,7 @@ class _IndexMoviesState extends State<IndexMovies> {
                   return Padding(
                     padding: EdgeInsets.only(right: key + 1 == Genre.genres.length ? 0 : 5),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => indexMoviesStore.searchByGenre(genre.id ?? 0),
                       child: Text('${genre.name}', style: GoogleFonts.ubuntu(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -212,13 +223,16 @@ class _IndexMoviesState extends State<IndexMovies> {
             Observer(
               builder: (_) {
 
-                indexMoviesStore.loadMoreMovies();
+                if(!indexMoviesStore.loadedAll) {
+                  indexMoviesStore.loadMoreMovies();
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.red
+                    )
+                  );
+                }
 
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.red
-                  )
-                );
+                return SizedBox();
               },
             )
           ],
