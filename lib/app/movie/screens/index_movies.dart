@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_sky/app/movie/components/movie_item.dart';
+import 'package:movie_sky/app/movie/models/Genre.dart';
 import 'package:movie_sky/app/movie/stores/index_movies_stores.dart';
 
 class IndexMovies extends StatefulWidget {
@@ -69,7 +70,9 @@ class _IndexMoviesState extends State<IndexMovies> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(150),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            indexMoviesStore.searchMovieByName('hello');
+                          },
                           child: Icon(Icons.search),
                           style: ButtonStyle(
                             minimumSize: MaterialStateProperty.all(Size.zero),
@@ -173,79 +176,26 @@ class _IndexMoviesState extends State<IndexMovies> {
               height: 32,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text('Thriller', style: GoogleFonts.ubuntu(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15
-                    )),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.red)
+                children: Genre.genres.asMap().entries.map<Widget>((e) {
+
+                  int key = e.key;
+                  Genre genre = e.value;
+
+                  return Padding(
+                    padding: EdgeInsets.only(right: key + 1 == Genre.genres.length ? 0 : 5),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('${genre.name}', style: GoogleFonts.ubuntu(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15
+                      )),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.red)
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text('Thriller', style: GoogleFonts.ubuntu(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15
-                    )),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.red)
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text('Thriller', style: GoogleFonts.ubuntu(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15
-                    )),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.red)
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text('Thriller', style: GoogleFonts.ubuntu(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15
-                    )),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.red)
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text('Thriller', style: GoogleFonts.ubuntu(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15
-                    )),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.red)
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text('Thriller', style: GoogleFonts.ubuntu(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15
-                    )),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.red)
-                    ),
-                  )
-                ],
+                  );
+                }).toList(),
               ),
             ),
             SizedBox(height: 15),

@@ -29,6 +29,8 @@ abstract class _IndexMoviesStore with Store {
 
       popularMovies.removeAt(0);
 
+      resetLoadedPages();
+
       setPopularMovies(popularMovies);
 
       setStatus(Status.IDLE);
@@ -52,8 +54,8 @@ abstract class _IndexMoviesStore with Store {
     this.popularPick = popularPick;
   }
 
-  @observable
-  ObservableList<Movie> popularMovies = ObservableList<Movie>();
+
+  final ObservableList<Movie> popularMovies = ObservableList<Movie>();
 
   @action
   void setPopularMovies(List<Movie> movies) {
@@ -65,13 +67,58 @@ abstract class _IndexMoviesStore with Store {
   int loadedPages = 1;
 
   @action
+  void resetLoadedPages() {
+    loadedPages = 1;
+  }
+
+  @observable
+  int limitPages = 500;
+
+  @action
+  void setLimitPages(int limitPages) {
+    this.limitPages = limitPages;
+  }
+
+  @observable
+  String lastQueryUrl = '$BASE_URL/discover/movie?sort_by=popularity.desc&api_key=$API_KEY';
+
+  @computed
+  String get lastQueryUrlPage {
+    return '$lastQueryUrl&page=$loadedPages';
+  }
+
+  Future<void> searchMovieByName(String name) async {
+    setStatus(Status.LOADING);
+    
+    http.Response response = await http.get(Uri.parse('$BASE_URL/search/movie?sort_by=popularity.desc&api_key=$API_KEY&query=$name'));
+    Map<dynamic, dynamic> movies = jsonDecode(response.body);
+
+    setLimitPages(movies['total_pages']);
+    resetLoadedPages();
+
+    List<Movie> popularMovies = movies['results'].map<Movie>((movie) {
+      return Movie.fromMap(movie);
+    }).toList();
+
+    print(popularMovies);
+
+    setPopularPick(popularMovies[0]);
+
+    popularMovies.removeAt(0);
+
+    setPopularMovies(popularMovies);
+
+    setStatus(Status.IDLE);
+  }
+
+  @action
   Future<void> loadMoreMovies() async {
 
     loadedPages++;
 
     if(loadedPages > 500) return;
 
-    http.Response response = await http.get(Uri.parse('$BASE_URL/discover/movie?sort_by=popularity.desc&page=$loadedPages&api_key=$API_KEY'));
+    http.Response response = await http.get(Uri.parse(lastQueryUrlPage));
     Map<dynamic, dynamic> movies = jsonDecode(response.body);
 
     List<Movie> popularMovies = movies['results'].map<Movie>((movie) {
@@ -91,5 +138,9 @@ abstract class _IndexMoviesStore with Store {
   void toggleSearchBar() {
     showSearchbar = !showSearchbar;
   }
+
+  // ================= TEXT FIELDS CONTROLLERS ====================
+
+
 
 }

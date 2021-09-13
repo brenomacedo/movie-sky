@@ -84,7 +84,7 @@ class Genre {
     }
   ];
 
-  static List<Genre>? genres = _genres.map<Genre>((e) {
+  static List<Genre> genres = _genres.map<Genre>((e) {
     return Genre.fromId(e['id']);
   }).toList();
 

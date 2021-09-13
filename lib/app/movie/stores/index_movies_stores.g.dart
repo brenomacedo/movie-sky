@@ -9,6 +9,14 @@ part of 'index_movies_stores.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$IndexMoviesStore on _IndexMoviesStore, Store {
+  Computed<String>? _$lastQueryUrlPageComputed;
+
+  @override
+  String get lastQueryUrlPage => (_$lastQueryUrlPageComputed ??=
+          Computed<String>(() => super.lastQueryUrlPage,
+              name: '_IndexMoviesStore.lastQueryUrlPage'))
+      .value;
+
   final _$statusAtom = Atom(name: '_IndexMoviesStore.status');
 
   @override
@@ -39,21 +47,6 @@ mixin _$IndexMoviesStore on _IndexMoviesStore, Store {
     });
   }
 
-  final _$popularMoviesAtom = Atom(name: '_IndexMoviesStore.popularMovies');
-
-  @override
-  ObservableList<Movie> get popularMovies {
-    _$popularMoviesAtom.reportRead();
-    return super.popularMovies;
-  }
-
-  @override
-  set popularMovies(ObservableList<Movie> value) {
-    _$popularMoviesAtom.reportWrite(value, super.popularMovies, () {
-      super.popularMovies = value;
-    });
-  }
-
   final _$loadedPagesAtom = Atom(name: '_IndexMoviesStore.loadedPages');
 
   @override
@@ -66,6 +59,36 @@ mixin _$IndexMoviesStore on _IndexMoviesStore, Store {
   set loadedPages(int value) {
     _$loadedPagesAtom.reportWrite(value, super.loadedPages, () {
       super.loadedPages = value;
+    });
+  }
+
+  final _$limitPagesAtom = Atom(name: '_IndexMoviesStore.limitPages');
+
+  @override
+  int get limitPages {
+    _$limitPagesAtom.reportRead();
+    return super.limitPages;
+  }
+
+  @override
+  set limitPages(int value) {
+    _$limitPagesAtom.reportWrite(value, super.limitPages, () {
+      super.limitPages = value;
+    });
+  }
+
+  final _$lastQueryUrlAtom = Atom(name: '_IndexMoviesStore.lastQueryUrl');
+
+  @override
+  String get lastQueryUrl {
+    _$lastQueryUrlAtom.reportRead();
+    return super.lastQueryUrl;
+  }
+
+  @override
+  set lastQueryUrl(String value) {
+    _$lastQueryUrlAtom.reportWrite(value, super.lastQueryUrl, () {
+      super.lastQueryUrl = value;
     });
   }
 
@@ -129,6 +152,28 @@ mixin _$IndexMoviesStore on _IndexMoviesStore, Store {
   }
 
   @override
+  void resetLoadedPages() {
+    final _$actionInfo = _$_IndexMoviesStoreActionController.startAction(
+        name: '_IndexMoviesStore.resetLoadedPages');
+    try {
+      return super.resetLoadedPages();
+    } finally {
+      _$_IndexMoviesStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setLimitPages(int limitPages) {
+    final _$actionInfo = _$_IndexMoviesStoreActionController.startAction(
+        name: '_IndexMoviesStore.setLimitPages');
+    try {
+      return super.setLimitPages(limitPages);
+    } finally {
+      _$_IndexMoviesStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void toggleSearchBar() {
     final _$actionInfo = _$_IndexMoviesStoreActionController.startAction(
         name: '_IndexMoviesStore.toggleSearchBar');
@@ -144,9 +189,11 @@ mixin _$IndexMoviesStore on _IndexMoviesStore, Store {
     return '''
 status: ${status},
 popularPick: ${popularPick},
-popularMovies: ${popularMovies},
 loadedPages: ${loadedPages},
-showSearchbar: ${showSearchbar}
+limitPages: ${limitPages},
+lastQueryUrl: ${lastQueryUrl},
+showSearchbar: ${showSearchbar},
+lastQueryUrlPage: ${lastQueryUrlPage}
     ''';
   }
 }
