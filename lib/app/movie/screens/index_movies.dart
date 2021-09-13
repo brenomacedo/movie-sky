@@ -102,65 +102,70 @@ class _IndexMoviesState extends State<IndexMovies> {
                     ),
                   );
 
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage('${indexMoviesStore.popularPick?.posterImage}'),
-                          alignment: Alignment.center,
-                          fit: BoxFit.cover
-                        ),
-                        borderRadius: BorderRadius.circular(12)
-                      ),
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      height: MediaQuery.of(context).size.width * 0.6
-                    ),
-                    SizedBox(width: 20),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('${indexMoviesStore.popularPick?.title} (${indexMoviesStore.popularPick?.releaseDate})', style: GoogleFonts.ubuntu(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold
-                          )),
-                          SizedBox(height: 5),
-                          Text.rich(TextSpan(
-                            style: TextStyle(
-                              color: Colors.grey[700]
-                            ),
-                            children: indexMoviesStore.popularPick?.genres?.asMap().entries.map((entry) {
-                    
-                              int idx = entry.key;
-                              Genre val = entry.value;
-                    
-                              return TextSpan(
-                                text: indexMoviesStore.popularPick?.genres?.length == idx + 1 ? '${val.name}' : '${val.name}, '
-                              );
-                            }).toList()
-                          )),
-                          SizedBox(height: 5),
-                          Row(
-                            children: [
-                              ...Iterable.generate(indexMoviesStore.popularPick?.rating ?? 0).map((e) {
-                                return Icon(Icons.star, color: Colors.amber, size: 25);
-                              }).toList(),
-                              ...Iterable.generate(indexMoviesStore.popularPick?.rating != null ? 5 - indexMoviesStore.popularPick!.rating! : 0).map((e) {
-                                return Icon(Icons.star, color: Colors.grey[700], size: 25);
-                              }).toList()
-                            ],
+                return GestureDetector(
+                  onTap: () {
+                    Modular.to.pushNamed('/movie/${indexMoviesStore.popularPick?.id}');
+                  },
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage('${indexMoviesStore.popularPick?.posterImage}'),
+                            alignment: Alignment.center,
+                            fit: BoxFit.cover
                           ),
-                          SizedBox(height: 5),
-                          Text('Original language: ${indexMoviesStore.popularPick?.originalLanguage?.toUpperCase()}', style: GoogleFonts.ubuntu(
-                            color: Colors.white
-                          ))
-                        ],
+                          borderRadius: BorderRadius.circular(12)
+                        ),
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        height: MediaQuery.of(context).size.width * 0.6
                       ),
-                    )
-                  ],
+                      SizedBox(width: 20),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('${indexMoviesStore.popularPick?.title} (${indexMoviesStore.popularPick?.releaseDate})', style: GoogleFonts.ubuntu(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold
+                            )),
+                            SizedBox(height: 5),
+                            Text.rich(TextSpan(
+                              style: TextStyle(
+                                color: Colors.grey[700]
+                              ),
+                              children: indexMoviesStore.popularPick?.genres?.asMap().entries.map((entry) {
+                      
+                                int idx = entry.key;
+                                Genre val = entry.value;
+                      
+                                return TextSpan(
+                                  text: indexMoviesStore.popularPick?.genres?.length == idx + 1 ? '${val.name}' : '${val.name}, '
+                                );
+                              }).toList()
+                            )),
+                            SizedBox(height: 5),
+                            Row(
+                              children: [
+                                ...Iterable.generate(indexMoviesStore.popularPick?.rating ?? 0).map((e) {
+                                  return Icon(Icons.star, color: Colors.amber, size: 25);
+                                }).toList(),
+                                ...Iterable.generate(indexMoviesStore.popularPick?.rating != null ? 5 - indexMoviesStore.popularPick!.rating! : 0).map((e) {
+                                  return Icon(Icons.star, color: Colors.grey[700], size: 25);
+                                }).toList()
+                              ],
+                            ),
+                            SizedBox(height: 5),
+                            Text('Original language: ${indexMoviesStore.popularPick?.originalLanguage?.toUpperCase()}', style: GoogleFonts.ubuntu(
+                              color: Colors.white
+                            ))
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 );
               },
             ),

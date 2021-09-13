@@ -3,6 +3,7 @@ import 'package:movie_sky/config/config.dart';
 
 class Movie {
 
+  int? id;
   String? title;
   String? releaseDate;
   String posterImage = 'https://i.imgur.com/E0UnFcD.png';
@@ -17,6 +18,7 @@ class Movie {
   factory Movie.fromMap(Map<dynamic, dynamic> movie) {
     Movie newMovie = Movie();
 
+    newMovie.id = movie['id'];
     newMovie.title = movie['title'];
     newMovie.releaseDate = movie['release_date'].split('-')[0];
     if(movie['poster_path'] != null)
