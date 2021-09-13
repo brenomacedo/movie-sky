@@ -104,7 +104,10 @@ class _IndexMoviesState extends State<IndexMovies> {
 
                 return GestureDetector(
                   onTap: () {
-                    Modular.to.pushNamed('/movie/${indexMoviesStore.popularPick?.id}');
+                    Modular.to.pushNamed(
+                      '/movie/${indexMoviesStore.popularPick?.id}',
+                      arguments: indexMoviesStore.popularPick
+                    );
                   },
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,

@@ -14,7 +14,7 @@ class MovieItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Modular.to.pushNamed('/movie/${movie.id}');
+        Modular.to.pushNamed('/movie/${movie.id}', arguments: movie);
       },
       child: Column(
         children: [
