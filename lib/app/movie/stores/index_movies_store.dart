@@ -4,7 +4,7 @@ import 'package:mobx/mobx.dart';
 import 'package:http/http.dart' as http;
 import 'package:movie_sky/app/movie/models/Movie.dart';
 import 'package:movie_sky/config/config.dart';
-part 'index_movies_stores.g.dart';
+part 'index_movies_store.g.dart';
 
 enum Status {
   IDLE,

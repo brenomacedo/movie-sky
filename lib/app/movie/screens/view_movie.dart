@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_sky/app/components/title_and_sub.dart';
 import 'package:movie_sky/app/movie/components/actor_item.dart';
 import 'package:movie_sky/app/movie/models/Genre.dart';
 import 'package:movie_sky/app/movie/models/Movie.dart';
+import 'package:movie_sky/app/movie/stores/index_movies_store.dart';
+import 'package:movie_sky/app/movie/stores/view_movie_store.dart';
 
 class ViewMovie extends StatelessWidget {
 
   final Movie movie;
+  final viewMovieStore = Modular.get<ViewMovieStore>();
 
-  const ViewMovie({ Key? key, required this.movie }) : super(key: key);
+  ViewMovie({ Key? key, required this.movie }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +51,7 @@ class ViewMovie extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Container(
-              height: 260,
+              height: 400,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage(movie.posterImage),
@@ -95,8 +99,9 @@ class ViewMovie extends StatelessWidget {
               ],
             ),
             SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Wrap(
+              alignment: WrapAlignment.center,
+              runSpacing: 5,
               children: movie.genres!.asMap().entries.map((e) {
 
                 int index = e.key;
@@ -133,18 +138,27 @@ class ViewMovie extends StatelessWidget {
             SizedBox(
               width: MediaQuery.of(context).size.width - 48,
               height: 180,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  ActorItem(),
-                  SizedBox(width: 15),
-                  ActorItem(),
-                  SizedBox(width: 15),
-                  ActorItem(),
-                  SizedBox(width: 15),
-                  ActorItem(),
-                ],
-              ),
+              child: Observer(
+                builder: (_) {
+                  if(viewMovieStore.status == Status.LOADING) {
+                    viewMovieStore.getCast(movie.id ?? 0);
+                    return Center(
+                      child: CircularProgressIndicator(color: Colors.red),
+                    );
+                  }
+
+                  return ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: viewMovieStore.cast.length,
+                    itemBuilder: (_, index) {
+                      return Padding(
+                        padding: EdgeInsets.only(left: viewMovieStore.cast.length == index + 1 ? 0 : 10),
+                        child: ActorItem(actor: viewMovieStore.cast[index]),
+                      );
+                    },
+                  );
+                },
+              )
             ),
             SizedBox(height: 15)
           ],

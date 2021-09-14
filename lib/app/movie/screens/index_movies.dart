@@ -4,7 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_sky/app/movie/components/movie_item.dart';
 import 'package:movie_sky/app/movie/models/Genre.dart';
-import 'package:movie_sky/app/movie/stores/index_movies_stores.dart';
+import 'package:movie_sky/app/movie/stores/index_movies_store.dart';
 
 class IndexMovies extends StatefulWidget {
   const IndexMovies({ Key? key }) : super(key: key);

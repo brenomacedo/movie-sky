@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:movie_sky/app/actor/models/Person.dart';
 
 class ActorItem extends StatelessWidget {
-  const ActorItem({ Key? key }) : super(key: key);
+
+  final Person actor;
+
+  const ActorItem({ Key? key, required this.actor }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +16,7 @@ class ActorItem extends StatelessWidget {
           height: 120,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: NetworkImage('https://image.tmdb.org/t/p/original/wjQXZTlFM3PVEUmKf1sUajjygqT.jpg'),
+              image: NetworkImage(actor.profilePic),
               alignment: Alignment.center,
               fit: BoxFit.cover
             ),
@@ -22,7 +26,7 @@ class ActorItem extends StatelessWidget {
         SizedBox(height: 10),
         SizedBox(
           width: 80,
-          child: Text('Tom Cruise', style: TextStyle(
+          child: Text('${actor.name}', style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold
           ), textAlign: TextAlign.center),
