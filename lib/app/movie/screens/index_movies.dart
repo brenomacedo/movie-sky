@@ -71,7 +71,28 @@ class _IndexMoviesState extends State<IndexMovies> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(150),
                         child: ElevatedButton(
-                          onPressed: indexMoviesStore.searchMovieByName,
+                          onPressed: () async {
+                            Response response = await indexMoviesStore.searchMovieByName();
+
+                            if(response == Response.ERROR) {
+                              showDialog(
+                                context: context,
+                                builder: (_) {
+                                  return Dialog(
+                                    child: Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Text('No movies found :(', style: GoogleFonts.ubuntu(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold
+                                      )),
+                                      color: Colors.red,
+                                    ),
+                                  );
+                                }
+                              );
+                            }
+                          },
                           child: Icon(Icons.search),
                           style: ButtonStyle(
                             minimumSize: MaterialStateProperty.all(Size.zero),

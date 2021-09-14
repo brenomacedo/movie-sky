@@ -11,6 +11,11 @@ enum Status {
   LOADING
 }
 
+enum Response {
+  SUCCESS,
+  ERROR
+}
+
 class IndexMoviesStore = _IndexMoviesStore with _$IndexMoviesStore;
 
 abstract class _IndexMoviesStore with Store {
@@ -68,7 +73,7 @@ abstract class _IndexMoviesStore with Store {
     return '$lastQueryUrl&page=$loadedPages';
   }
 
-  Future<void> searchMovieByName() async {
+  Future<Response> searchMovieByName() async {
     setStatus(Status.LOADING);
     
     http.Response response = await http.get(Uri.parse('$BASE_URL/search/movie?sort_by=popularity.desc&api_key=$API_KEY&query=$searchField'));
@@ -78,6 +83,11 @@ abstract class _IndexMoviesStore with Store {
     toggleSearchBar();
 
     Map<dynamic, dynamic> movies = jsonDecode(response.body);
+
+    if(movies['results'].length == 0) {
+      setStatus(Status.IDLE);
+      return Response.ERROR;
+    }
 
     setLimitPages(movies['total_pages']);
     resetLoadedPages();
@@ -93,6 +103,8 @@ abstract class _IndexMoviesStore with Store {
     setPopularMovies(popularMovies);
 
     setStatus(Status.IDLE);
+
+    return Response.SUCCESS;
   }
 
   Future<void> searchByGenre(int genreId) async {
