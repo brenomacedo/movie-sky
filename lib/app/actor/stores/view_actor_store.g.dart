@@ -65,6 +65,17 @@ mixin _$ViewActorStore on _ViewActorStore, Store {
   }
 
   @override
+  void setMovies(List<Movie> movies) {
+    final _$actionInfo = _$_ViewActorStoreActionController.startAction(
+        name: '_ViewActorStore.setMovies');
+    try {
+      return super.setMovies(movies);
+    } finally {
+      _$_ViewActorStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 status: ${status},

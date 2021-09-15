@@ -152,7 +152,7 @@ class ViewMovie extends StatelessWidget {
                     itemCount: viewMovieStore.cast.length,
                     itemBuilder: (_, index) {
                       return Padding(
-                        padding: EdgeInsets.only(left: viewMovieStore.cast.length == index + 1 ? 0 : 10),
+                        padding: EdgeInsets.only(right: viewMovieStore.cast.length == index + 1 ? 0 : 10),
                         child: ActorItem(actor: viewMovieStore.cast[index]),
                       );
                     },
