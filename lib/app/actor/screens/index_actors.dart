@@ -92,7 +92,7 @@ class IndexActors extends StatelessWidget {
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: indexActorsStore.actors.length,
                   itemBuilder: (_, index) {
-                    return ActorSearchItem();
+                    return ActorSearchItem(actor: indexActorsStore.actors[index]);
                   },
                 );
               },
@@ -100,11 +100,14 @@ class IndexActors extends StatelessWidget {
             Observer(
               builder: (_) {
 
-                indexActorsStore.loadMoreMovies();
+                if(!indexActorsStore.loadedAll) {
+                  indexActorsStore.loadMoreMovies();
+                  return Center(
+                    child: CircularProgressIndicator(color: Colors.red)
+                  );
+                }
 
-                return Center(
-                  child: CircularProgressIndicator(color: Colors.red)
-                );
+                return SizedBox();
               },
             )
           ],

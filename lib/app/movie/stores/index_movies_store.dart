@@ -74,6 +74,9 @@ abstract class _IndexMoviesStore with Store {
   }
 
   Future<Response> searchMovieByName() async {
+
+    if(searchField == '') return Response.SUCCESS;
+
     setStatus(Status.LOADING);
     
     http.Response response = await http.get(Uri.parse('$BASE_URL/search/movie?sort_by=popularity.desc&api_key=$API_KEY&query=$searchField'));

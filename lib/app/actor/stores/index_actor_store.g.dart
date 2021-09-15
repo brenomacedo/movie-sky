@@ -16,6 +16,13 @@ mixin _$IndexActorsStore on _IndexActorsStore, Store {
           Computed<String>(() => super.lastQueryUrlPage,
               name: '_IndexActorsStore.lastQueryUrlPage'))
       .value;
+  Computed<bool>? _$loadedAllComputed;
+
+  @override
+  bool get loadedAll =>
+      (_$loadedAllComputed ??= Computed<bool>(() => super.loadedAll,
+              name: '_IndexActorsStore.loadedAll'))
+          .value;
 
   final _$loadedPagesAtom = Atom(name: '_IndexActorsStore.loadedPages');
 
@@ -153,7 +160,8 @@ loadedPages: ${loadedPages},
 limitPages: ${limitPages},
 lastQueryUrl: ${lastQueryUrl},
 searchField: ${searchField},
-lastQueryUrlPage: ${lastQueryUrlPage}
+lastQueryUrlPage: ${lastQueryUrlPage},
+loadedAll: ${loadedAll}
     ''';
   }
 }

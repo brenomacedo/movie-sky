@@ -74,6 +74,8 @@ abstract class _IndexActorsStore with Store {
   }
 
   Future<Response> searchActorByName() async {
+
+    if(searchField == '') return Response.SUCCESS;
     
     http.Response response = await http.get(Uri.parse('$BASE_URL/search/person?api_key=$API_KEY&query=$searchField'));
     setLastQueryUrl('$BASE_URL/search/person?api_key=$API_KEY&query=$searchField');
@@ -95,6 +97,9 @@ abstract class _IndexActorsStore with Store {
 
     return Response.SUCCESS;
   }
+
+  @computed
+  bool get loadedAll => this.loadedPages == this.limitPages;
 
   // ==================== Search fields ======================
 

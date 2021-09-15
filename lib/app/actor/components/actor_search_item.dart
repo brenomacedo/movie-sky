@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_sky/app/actor/models/Person.dart';
 
 class ActorSearchItem extends StatelessWidget {
-  const ActorSearchItem({ Key? key }) : super(key: key);
+  final Person actor;
+
+  const ActorSearchItem({ Key? key, required this.actor }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,27 +32,20 @@ class ActorSearchItem extends StatelessWidget {
             top: 15,
             left: 150,
             child: Container(
+              width: 150,
               height: 150,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Tom cruise', style: GoogleFonts.ubuntu(
+                  Text('${actor.name}', style: GoogleFonts.ubuntu(
                     color: Colors.white,
                     fontSize: 20
                   )),
                   SizedBox(height: 10),
-                  Text('Gender: Male', style: GoogleFonts.ubuntu(
+                  Text('Gender: ${actor.gender}', style: GoogleFonts.ubuntu(
                     color: Colors.grey[700],
                     fontSize: 16
-                  )),
-                  Text('Birthday: 01-25-2000', style: GoogleFonts.ubuntu(
-                    color: Colors.grey[700],
-                    fontSize:16
-                  )),
-                  Text('Local: Brazil', style: GoogleFonts.ubuntu(
-                    color: Colors.grey[700],
-                    fontSize:16
                   ))
                 ],
               ),
@@ -63,7 +59,7 @@ class ActorSearchItem extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 image: DecorationImage(
-                  image: NetworkImage('https://image.tmdb.org/t/p/original/wjQXZTlFM3PVEUmKf1sUajjygqT.jpg'),
+                  image: NetworkImage(actor.profilePic),
                   fit: BoxFit.cover,
                   alignment: Alignment.center
                 )
