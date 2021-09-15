@@ -195,7 +195,7 @@ class _IndexMoviesState extends State<IndexMovies> {
             ),
             SizedBox(height: 15),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () => Modular.to.pushNamed('/actor'),
               child: Text('Search for actors', style: GoogleFonts.ubuntu(
                 fontWeight: FontWeight.bold
               )),

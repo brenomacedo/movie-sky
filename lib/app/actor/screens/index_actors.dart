@@ -21,7 +21,7 @@ class IndexActors extends StatelessWidget {
             Row(
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () => Modular.to.pop(),
                   icon: Icon(Icons.arrow_back, color: Colors.white),
                   constraints: BoxConstraints(),
                   padding: EdgeInsets.only(right: 16),
