@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_sky/app/actor/components/actor_search_item.dart';
+import 'package:movie_sky/app/actor/stores/index_actor_store.dart';
+import 'package:movie_sky/app/movie/stores/index_movies_store.dart';
 
 class IndexActors extends StatelessWidget {
-  const IndexActors({ Key? key }) : super(key: key);
+  IndexActors({ Key? key }) : super(key: key);
+
+  final indexActorsStore = Modular.get<IndexActorsStore>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +40,7 @@ class IndexActors extends StatelessWidget {
                       color: Colors.white,
                       fontSize: 20
                     ),
+                    onChanged: (text) => indexActorsStore.setSearchField(text)
                   ),
                 ),
                 SizedBox(
@@ -42,7 +49,30 @@ class IndexActors extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(150),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        
+                        Response response = await indexActorsStore.searchActorByName();
+
+                        if(response == Response.ERROR) {
+                          showDialog(
+                            context: context,
+                            builder: (_) {
+                              return Dialog(
+                                child: Container(
+                                  padding: EdgeInsets.all(16),
+                                  child: Text('No actors found :(', style: GoogleFonts.ubuntu(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold
+                                  )),
+                                  color: Colors.red,
+                                ),
+                              );
+                            }
+                          );
+                        }
+
+                      },
                       child: Icon(Icons.search),
                       style: ButtonStyle(
                         minimumSize: MaterialStateProperty.all(Size.zero),
@@ -55,11 +85,28 @@ class IndexActors extends StatelessWidget {
               ],
             ),
             SizedBox(height: 16),
-            ActorSearchItem(),
-            ActorSearchItem(),
-            ActorSearchItem(),
-            ActorSearchItem(),
-            ActorSearchItem()
+            Observer(
+              builder: (_) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: indexActorsStore.actors.length,
+                  itemBuilder: (_, index) {
+                    return ActorSearchItem();
+                  },
+                );
+              },
+            ),
+            Observer(
+              builder: (_) {
+
+                indexActorsStore.loadMoreMovies();
+
+                return Center(
+                  child: CircularProgressIndicator(color: Colors.red)
+                );
+              },
+            )
           ],
         ),
       ),

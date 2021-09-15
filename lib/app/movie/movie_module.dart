@@ -15,7 +15,7 @@ class MovieModule extends Module {
   @override
   final List<ModularRoute> routes = [
     ChildRoute('/', child: (_, args) => IndexMovies()),
-    ChildRoute('/:id', child: (_, args) => ViewMovie(movie: args.data))
+    ChildRoute('/:id', child: (_, args) => ViewMovie(movie: args.data), transition: TransitionType.rotate)
   ];
 
 }
