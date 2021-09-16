@@ -4,7 +4,7 @@ class LoginButton extends StatelessWidget {
 
   final String buttonText;
   final Widget icon;
-  final Function onPressed;
+  final VoidCallback onPressed;
   final Color? bgColor;
   final Color? textColor;
 
@@ -20,7 +20,7 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

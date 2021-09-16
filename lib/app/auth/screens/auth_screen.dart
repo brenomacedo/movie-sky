@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_sky/app/auth/components/animated_logo.dart';
 import 'package:movie_sky/app/auth/components/login_button.dart';
+import 'package:movie_sky/app/auth/stores/auth_store.dart';
 
 class AuthScreen extends StatelessWidget {
-  const AuthScreen({ Key? key }) : super(key: key);
+  AuthScreen({ Key? key }) : super(key: key);
+
+  final authStore = Modular.get<AuthStore>();
 
   @override
   Widget build(BuildContext context) {
@@ -19,35 +24,21 @@ class AuthScreen extends StatelessWidget {
             SizedBox(height: 15),
             LoginButton(
               buttonText: 'Login with google',
-              bgColor: Colors.white,
-              textColor: Colors.black,
-              icon: FaIcon(
-                FontAwesomeIcons.accessibleIcon,
-                color: Colors.red
-              ),
-              onPressed: () {},
-            ),
-            SizedBox(height: 15),
-            LoginButton(
-              buttonText: 'Login with twitter',
-              bgColor: Colors.blue[300],
+              bgColor: Colors.red,
               textColor: Colors.white,
               icon: FaIcon(
-                FontAwesomeIcons.accessibleIcon,
-                color: Colors.white,
+                FontAwesomeIcons.google,
+                color: Colors.white
               ),
-              onPressed: () {},
+              onPressed: authStore.login,
             ),
-            SizedBox(height: 15),
-            LoginButton(
-              buttonText: 'Login with github',
-              bgColor: Colors.grey[700],
-              textColor: Colors.white,
-              icon: FaIcon(
-                FontAwesomeIcons.accessibleIcon,
-                color: Colors.red,
-              ),
-              onPressed: () {},
+            TextButton(
+              child: Text('Continue without login', style: GoogleFonts.ubuntu(
+                color: Colors.white
+              )),
+              onPressed: () {
+                Modular.to.pushNamed('/movie');
+              },
             )
           ],
         ),
