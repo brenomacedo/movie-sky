@@ -20,6 +20,13 @@ class _IndexMoviesState extends State<IndexMovies> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.red,
+        onPressed: () {
+          
+        },
+        child: Icon(Icons.list)
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: ListView(

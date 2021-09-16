@@ -31,7 +31,11 @@ class SplashScreen extends StatelessWidget {
                   child: CircularProgressIndicator(color: Colors.red),
                 );
 
-              Modular.to.navigate('/auth/login');
+              if(authStore.user == null) {
+                Modular.to.navigate('/auth/login');
+              } else {
+                Modular.to.navigate('/movie');
+              }
 
               return SizedBox();
             },

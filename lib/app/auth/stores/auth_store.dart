@@ -17,7 +17,7 @@ abstract class _AuthStore with Store {
         if(user != null) {
           setUser(AppUser(id: user.uid, name: user.displayName, profilePic: user.photoURL));
         } else {
-          user = null;
+          setUser(null);
         }
 
         setStatus(Status.IDLE);
@@ -38,13 +38,11 @@ abstract class _AuthStore with Store {
   AppUser? user;
 
   @action
-  void setUser(AppUser user) {
+  void setUser(AppUser? user) {
     this.user = user;
   }
   
   Future<void> login() async {
-
-    print('hello');
 
     GoogleSignIn googleSignIn = GoogleSignIn();
     GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();

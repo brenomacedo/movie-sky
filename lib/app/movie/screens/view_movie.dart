@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_sky/app/auth/stores/auth_store.dart';
 import 'package:movie_sky/app/components/title_and_sub.dart';
 import 'package:movie_sky/app/movie/components/actor_item.dart';
 import 'package:movie_sky/app/movie/models/Genre.dart';
@@ -13,12 +15,20 @@ class ViewMovie extends StatelessWidget {
 
   final Movie movie;
   final viewMovieStore = Modular.get<ViewMovieStore>();
+  final authStore = Modular.get<AuthStore>();
 
   ViewMovie({ Key? key, required this.movie }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.red,
+        onPressed: () {
+          authStore.logout();
+        },
+        child: Icon(Icons.list)
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: ListView(
@@ -34,7 +44,39 @@ class ViewMovie extends StatelessWidget {
                   width: 170,
                   height: 40,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+
+                      if(authStore.user == null) {
+                        await authStore.login();
+
+                        await FirebaseFirestore.instance.collection(authStore.user!.id).doc('${movie.id}').set(
+                          { 'watched': false }
+                        );
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Added to watchlist', style: TextStyle(color: Colors.white)),
+                            backgroundColor: Colors.grey[700],
+                            duration: Duration(seconds: 3),
+                          )
+                        );
+
+                        return;
+                      }
+
+                      await FirebaseFirestore.instance.collection(authStore.user!.id).doc('${movie.id}').set(
+                        { 'watched': false }
+                      );
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Added to watchlist', style: TextStyle(color: Colors.white)),
+                          backgroundColor: Colors.grey[700],
+                          duration: Duration(seconds: 3),
+                        )
+                      );
+
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
