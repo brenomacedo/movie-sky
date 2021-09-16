@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "896601681000",
+    "project_id": "movie-sky",
+    "storage_bucket": "movie-sky.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:896601681000:android:f368e8c552860d05991fdd",
+        "android_client_info": {
+          "package_name": "com.moviesky.movie_sky"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "896601681000-2iievu2lqmr721qhrck0kp6ljouhgfib.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moviesky.movie_sky",
+            "certificate_hash": "824d5d65df37d79ddc3b7c22fe08f61fc4eec602"
+          }
+        },
+        {
+          "client_id": "896601681000-qelmm11cpfsr3o0607ho24go7n2jinnf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8JbHwdxBLHOXjt7IARVSMYji12ETW9Xc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "896601681000-qelmm11cpfsr3o0607ho24go7n2jinnf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
