@@ -49,9 +49,11 @@ class ViewMovie extends StatelessWidget {
                       if(authStore.user == null) {
                         await authStore.login();
 
-                        await FirebaseFirestore.instance.collection(authStore.user!.id).doc('${movie.id}').set(
-                          { 'watched': false }
-                        );
+                        await FirebaseFirestore.instance.collection(authStore.user!.id).doc('${movie.id}').set({
+                          'id': movie.id,
+                          'image': movie.posterImage,
+                          'title': movie.title
+                        });
 
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -64,9 +66,11 @@ class ViewMovie extends StatelessWidget {
                         return;
                       }
 
-                      await FirebaseFirestore.instance.collection(authStore.user!.id).doc('${movie.id}').set(
-                        { 'watched': false }
-                      );
+                      await FirebaseFirestore.instance.collection(authStore.user!.id).doc('${movie.id}').set({
+                          'id': movie.id,
+                          'image': movie.posterImage,
+                          'title': movie.title
+                        });
 
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
