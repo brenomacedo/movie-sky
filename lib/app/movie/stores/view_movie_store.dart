@@ -22,6 +22,12 @@ abstract class _ViewMovieStore with Store {
 
   final List<Person> cast = ObservableList<Person>();
 
+  @action
+  void setCast(List<Person> cast) {
+    this.cast.clear();
+    this.cast.addAll(cast);
+  }
+
   void getCast(int movieId) async {
 
     http.Response response = await http.get(Uri.parse('$BASE_URL/movie/$movieId/credits?api_key=$API_KEY'));
@@ -31,7 +37,7 @@ abstract class _ViewMovieStore with Store {
       return Person.fromMap(e);
     }).toList();
 
-    this.cast.addAll(cast);
+    setCast(cast);
 
     setStatus(Status.IDLE);
 

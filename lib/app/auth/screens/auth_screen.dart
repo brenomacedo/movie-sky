@@ -30,7 +30,10 @@ class AuthScreen extends StatelessWidget {
                 FontAwesomeIcons.google,
                 color: Colors.white
               ),
-              onPressed: authStore.login,
+              onPressed: () async {
+                await authStore.login();
+                Modular.to.pushNamed('/movie');
+              },
             ),
             TextButton(
               child: Text('Continue without login', style: GoogleFonts.ubuntu(

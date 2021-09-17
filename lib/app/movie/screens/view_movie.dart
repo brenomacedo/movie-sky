@@ -21,6 +21,8 @@ class ViewMovie extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    viewMovieStore.getCast(movie.id ?? 0);
+    
     return Scaffold(
       floatingActionButton: authStore.user != null ? FloatingActionButton(
         backgroundColor: Colors.red,
@@ -187,7 +189,6 @@ class ViewMovie extends StatelessWidget {
               child: Observer(
                 builder: (_) {
                   if(viewMovieStore.status == Status.LOADING) {
-                    viewMovieStore.getCast(movie.id ?? 0);
                     return Center(
                       child: CircularProgressIndicator(color: Colors.red),
                     );

@@ -33,7 +33,9 @@ class ViewActor extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Modular.to.pop();
+                        },
                         icon: Icon(Icons.arrow_back, color: Colors.white),
                       )
                     ],
