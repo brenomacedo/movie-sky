@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_sky/app/auth/stores/auth_store.dart';
 import 'package:movie_sky/app/movie/components/movie_item.dart';
 import 'package:movie_sky/app/movie/models/Genre.dart';
 import 'package:movie_sky/app/movie/stores/index_movies_store.dart';
@@ -16,17 +17,18 @@ class IndexMovies extends StatefulWidget {
 class _IndexMoviesState extends State<IndexMovies> {
 
   final indexMoviesStore = Modular.get<IndexMoviesStore>();
+  final authStore = Modular.get<AuthStore>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: authStore.user != null ? FloatingActionButton(
         backgroundColor: Colors.red,
         onPressed: () {
-          
+          Modular.to.pushNamed('/movie/watchlist');
         },
         child: Icon(Icons.list)
-      ),
+      ) : null,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: ListView(

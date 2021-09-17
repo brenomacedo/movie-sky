@@ -22,13 +22,13 @@ class ViewMovie extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: authStore.user != null ? FloatingActionButton(
         backgroundColor: Colors.red,
         onPressed: () {
-          authStore.logout();
+          Modular.to.pushNamed('/movie/watchlist');
         },
         child: Icon(Icons.list)
-      ),
+      ) : null,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: ListView(

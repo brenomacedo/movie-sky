@@ -50,7 +50,7 @@ class WatchListMovie extends StatelessWidget {
                 ),
                 child: Icon(Icons.delete),
                 onPressed: () {
-                  watchListStore.removeMovie(movie);
+                  watchListStore.deleteMovie(movie);
                 },
               ),
             ),
