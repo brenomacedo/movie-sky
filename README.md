@@ -1,16 +1,53 @@
-# movie_sky
+<h1 align="center">🎬 Movie Sky 🎬</h1>
+<h3 align="center" style="width: 75%; margin: 0 auto;">
+    An application to discover movies, view their casts and add them to your watchlist!
+</h3>
 
-A new Flutter project.
+<br>
+<p align="center">
+    <img src="https://i.imgur.com/S1AmQhT.png">
+</p>
 
-## Getting Started
+<br>
 
-This project is a starting point for a Flutter application.
+<h2 align="center">Used technologies:</h2>
+<br>
 
-A few resources to get you started if this is your first Flutter project:
+<div>
+    <div style="display: flex; align-items: center; gap: 20px;">
+        <img width="40" src="https://i.imgur.com/sOyeLu9.png">  <h3>Flutter and Flutter Modular</h3>
+    </div>
+    <br>
+    <div style="display: flex; align-items: center; gap: 20px;">
+        <img width="40" src="https://i.imgur.com/vSipgUY.png">  <h3>Firebase</h3>
+    </div>
+    <br>
+    <div style="display: flex; align-items: center; gap: 20px;">
+        <img width="40" src="https://i.imgur.com/HlNEfZR.png">  <h3>MobX</h3>
+    </div>
+    <br>
+    <div style="display: flex; align-items: center; gap: 20px;">
+        <img width="40" src="https://i.imgur.com/IxEoB10.png">  <h3>TheMovieDB API</h3>
+    </div>
+</div>
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+<br />
+<br />
+<br />
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Algumas Screenshots:
+
+<p align="center">
+    <img width="48%" src="https://i.imgur.com/jFM8pqF.png">
+    <img width="48%" src="https://i.imgur.com/xbfzGj6.png">
+</p>
+
+<p align="center">
+    <img width="48%" src="https://i.imgur.com/2G2Yx2f.png">
+    <img width="48%" src="https://i.imgur.com/dWdFpKD.png">
+</p>
+
+<p align="center">
+    <img width="48%" src="https://i.imgur.com/9zBHhvk.png">
+    <img width="48%" src="https://i.imgur.com/vpDCQgm.png">
+</p>
